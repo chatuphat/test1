@@ -1,0 +1,25 @@
+name: Docker Compose
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Stop containers
+        run: docker-compose down
+
+      - name: Pull latest changes
+        run: git pull origin main
+
+      - name: Build images
+        run: docker-compose build
+
+      - name: Start containers
+        run: docker-compose up -d
